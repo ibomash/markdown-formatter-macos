@@ -21,9 +21,19 @@ struct MenuBarView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
-            ForEach(1...6, id: \.self) { level in
-                Button("Base H\(level)") {
-                    model.rebaseClipboard(to: level)
+            Menu("Copy") {
+                ForEach(1...6, id: \.self) { level in
+                    Button("H\(level)") {
+                        model.copyRebased(to: level)
+                    }
+                }
+            }
+
+            Menu("Paste") {
+                ForEach(1...6, id: \.self) { level in
+                    Button("H\(level)") {
+                        model.pasteRebased(to: level)
+                    }
                 }
             }
 

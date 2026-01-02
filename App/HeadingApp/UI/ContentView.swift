@@ -74,7 +74,7 @@ struct ContentView: View {
             HStack(spacing: 10) {
                 ForEach(1...6, id: \.self) { level in
                     Button(action: {
-                        model.rebaseClipboard(to: level)
+                        model.baseLevel = level
                     }) {
                         Text("H\(level)")
                             .font(.custom("Avenir Next", size: 13))
@@ -85,6 +85,35 @@ struct ContentView: View {
                     }
                     .buttonStyle(.plain)
                 }
+            }
+
+            HStack(spacing: 12) {
+                Button("Copy") {
+                    model.copyRebased(to: model.baseLevel)
+                }
+                .buttonStyle(.plain)
+                .font(.custom("Avenir Next", size: 13))
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(Color.white.opacity(0.2))
+                .clipShape(Capsule())
+
+                Button("Paste") {
+                    model.pasteRebased(to: model.baseLevel)
+                }
+                .buttonStyle(.plain)
+                .font(.custom("Avenir Next", size: 13))
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(accent)
+                .foregroundStyle(.black)
+                .clipShape(Capsule())
+            }
+
+            if let statusMessage = model.statusMessage {
+                Text(statusMessage)
+                    .font(.custom("Avenir Next", size: 12))
+                    .foregroundStyle(.white.opacity(0.7))
             }
         }
         .opacity(animateIn ? 1 : 0)

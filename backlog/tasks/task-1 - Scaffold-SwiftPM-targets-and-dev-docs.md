@@ -1,9 +1,10 @@
 ---
 id: task-1
 title: Scaffold SwiftPM targets and dev docs
-status: Later
+status: Done
 assignee: []
 created_date: '2026-01-01 21:11'
+updated_date: '2026-01-01 21:18'
 labels: []
 dependencies: []
 ---

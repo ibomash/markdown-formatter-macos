@@ -200,3 +200,14 @@ App/
 
 ## Open Questions
 - None.
+
+## HeadingCore Test Fixtures
+
+Create sample fixtures under `Tests/HeadingCoreTests/Fixtures/`:
+
+- `no-headings.md` and `no-headings.out.md`
+- `basic.md` and `basic.out.md`
+- `unicode.md` and `unicode.out.md`
+- `max-level.md` and `max-level.out.md`
+
+Use these in golden-file tests to validate rebasing output exactly.

@@ -1,9 +1,10 @@
 ---
 id: task-2
 title: Implement HeadingCore with tests
-status: Later
+status: Done
 assignee: []
 created_date: '2026-01-01 21:11'
+updated_date: '2026-01-02 02:09'
 labels: []
 dependencies: []
 ---

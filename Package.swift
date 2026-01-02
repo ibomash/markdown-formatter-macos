@@ -20,7 +20,10 @@ let package = Package(
         .testTarget(
             name: "HeadingCoreTests",
             dependencies: ["HeadingCore"],
-            path: "Tests/HeadingCoreTests"
+            path: "Tests/HeadingCoreTests",
+            resources: [
+                .process("Fixtures")
+            ]
         )
     ]
 )

@@ -82,7 +82,10 @@ public func parseHeadings(in text: String) -> HeadingParseResult {
         guard hashCount > 0, hashCount <= 6 else { continue }
         guard scanIndex < line.endIndex, line[scanIndex].isWhitespace else { continue }
         let titleStart = line.index(after: scanIndex)
-        let title = line[titleStart...].trimmingCharacters(in: .whitespaces)
+        let titleSlice = line[titleStart...]
+        let trimmedStart = titleSlice.drop(while: { $0.isWhitespace })
+        let trimmed = trimmedStart.reversed().drop(while: { $0.isWhitespace }).reversed()
+        let title = String(trimmed)
         let match = HeadingMatch(
             lineIndex: index,
             columnIndex: 0,

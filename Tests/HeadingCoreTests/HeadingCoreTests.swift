@@ -53,7 +53,10 @@ final class HeadingCoreTests: XCTestCase {
     }
 
     private func fixtureText(named name: String) throws -> String {
-        let url = try XCTUnwrap(Bundle.module.url(forResource: name, withExtension: "md", subdirectory: "Fixtures"))
+        let url = try XCTUnwrap(
+            Bundle.module.url(forResource: name, withExtension: "md", subdirectory: "Fixtures")
+                ?? Bundle.module.url(forResource: name, withExtension: "md")
+        )
         return try String(contentsOf: url, encoding: .utf8)
     }
 

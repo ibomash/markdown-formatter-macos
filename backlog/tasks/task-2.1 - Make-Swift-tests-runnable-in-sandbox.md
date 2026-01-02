@@ -1,10 +1,10 @@
 ---
 id: task-2.1
 title: Make Swift tests runnable in sandbox
-status: Later
+status: Done
 assignee: []
 created_date: '2026-01-02 05:35'
-updated_date: '2026-01-02 05:41'
+updated_date: '2026-01-02 00:05'
 labels: []
 dependencies: []
 parent_task_id: task-2
@@ -33,7 +33,8 @@ swift test --disable-sandbox \
   --security-path /Users/ibomash/Documents/Code/markdown-formatter-macos/.swiftpm/security \
   --scratch-path /Users/ibomash/Documents/Code/markdown-formatter-macos/.swiftpm/scratch
 
-Next steps:
-- Install Xcode or a toolchain that provides XCTest; set DEVELOPER_DIR or xcode-select.
-- Re-run the command above to confirm tests pass.
+Update:
+- Verified Xcode toolchain is available via `xcode-select -p` (`/Applications/Xcode.app/Contents/Developer`).
+- Swift tests pass using the command above with `--disable-sandbox` and local cache paths.
+- Added a fallback in tests for resource lookup when SwiftPM flattens processed resources.
 <!-- SECTION:DESCRIPTION:END -->

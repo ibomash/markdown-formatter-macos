@@ -15,8 +15,10 @@ This repository contains a macOS Markdown heading formatter with three main surf
 
 ## Key Directories
 - `Sources/HeadingCore`: Pure Swift module that parses headings, inspects heading metadata, and rebases heading levels.
-- `Sources/HeadingCLI`: SwiftPM executable target for the CLI entry point and argument handling.
+- `Sources/HeadingCLIKit`: Testable CLI logic (argument parsing and JSON output).
+- `Sources/HeadingCLI`: SwiftPM executable target for the CLI entry point.
 - `Tests/HeadingCoreTests`: Unit and golden fixture tests for the core.
+- `Tests/HeadingCLIKitTests`: CLI behavior tests.
 - `App/HeadingApp`: macOS app target code (SwiftUI entry point, UI, clipboard monitoring, paste integration).
 - `backlog/`: Planning docs, tasks, and decisions. See `backlog/tasks/` for current work items.
 - `specs/`: Product and technical specs. Read `specs/AGENTS.md` for formatting rules.
@@ -27,8 +29,10 @@ This repository contains a macOS Markdown heading formatter with three main surf
   - `inspectHeadings` to summarize heading levels and titles (JSON-friendly summaries).
   - `rebaseHeadings` to normalize heading levels to a new base.
 - `HeadingCLI`:
-  - Reads input from stdin or a file, then calls into `HeadingCore`.
+  - Entry point that forwards to `HeadingCLIKit`.
   - Supports `--inspect` (JSON summary), `--debug` (JSON lines to stderr), and `--base-level` for rebasing.
+- `HeadingCLIKit`:
+  - Pure, testable CLI layer for argument parsing, input handling, and JSON output.
 - `HeadingApp`:
   - Uses a shared `AppModel` that monitors the clipboard and updates a `HeadingInspectSummary`.
   - Provides a menu bar extra to copy/paste rebased output at a chosen base level.
@@ -38,5 +42,5 @@ This repository contains a macOS Markdown heading formatter with three main surf
 ## Where To Start
 - For build/test/run commands and sandbox-safe workflows, use `DEVELOPMENT.md`.
 - For the core APIs, start with `Sources/HeadingCore/HeadingCore.swift`.
-- For the CLI surface, start with `Sources/HeadingCLI/main.swift`.
+- For the CLI surface, start with `Sources/HeadingCLIKit/HeadingCLIKit.swift`.
 - For the app, start with `App/HeadingApp/HeadingApp.swift` and follow the `AppModel` and UI views.

@@ -8,6 +8,9 @@ swift test
 
 # Run CLI (stdin to stdout)
 swift run heading-cli < input.md > output.md
+
+# Run macOS app
+swift run HeadingApp
 ```
 
 ## Sandboxed Test Command (Codex/CI)

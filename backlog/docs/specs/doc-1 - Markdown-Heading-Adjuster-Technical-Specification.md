@@ -19,6 +19,8 @@ Adopt a three-target structure with a pure core, a CLI wrapper, and a macOS app.
 - `HeadingCLI` (SwiftPM executable target)
   - Reads input from stdin or file, calls `HeadingCore`, writes to stdout.
   - Emits machine-readable inspection/debug output.
+- `HeadingCLIKit` (SwiftPM library target)
+  - Testable CLI argument parsing and JSON output logic shared by the CLI entry point.
 - `HeadingApp` (macOS app target, AppKit or SwiftUI)
   - Menu bar extra + floating palette.
   - Clipboard monitoring, preference storage, and paste automation.
@@ -142,15 +144,17 @@ Persist in `UserDefaults`:
 ```
 App/
   HeadingApp/
-    AppDelegate.swift
-    MenuBar/
-    Palette/
     Clipboard/
-  HeadingCore/
-    Sources/
-    Tests/
+    Model/
+    Paste/
+    UI/
+Sources/
   HeadingCLI/
-    Sources/
+  HeadingCLIKit/
+  HeadingCore/
+Tests/
+  HeadingCoreTests/
+  HeadingCLIKitTests/
 ```
 
 `HeadingCore` should be platform-agnostic and shared by CLI + app.

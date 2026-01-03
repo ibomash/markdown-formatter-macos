@@ -27,6 +27,7 @@ struct ContentView: View {
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
             .padding(.top, 32)
+            .accessibilityIdentifier("palette-root")
         }
         .background(
             WindowAccessor { window in
@@ -90,6 +91,7 @@ struct ContentView: View {
                             .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("palette-level-\(level)")
                 }
             }
 
@@ -103,6 +105,7 @@ struct ContentView: View {
                 .padding(.vertical, 8)
                 .background(Color.white.opacity(0.2))
                 .clipShape(Capsule())
+                .accessibilityIdentifier("palette-copy-button")
 
                 Button("Paste") {
                     model.pasteRebased(to: model.baseLevel)
@@ -114,12 +117,14 @@ struct ContentView: View {
                 .background(accent)
                 .foregroundStyle(.black)
                 .clipShape(Capsule())
+                .accessibilityIdentifier("palette-paste-button")
             }
 
             if let statusMessage = model.statusMessage {
                 Text(statusMessage)
                     .font(.custom("Avenir Next", size: 12))
                     .foregroundStyle(.white.opacity(0.7))
+                    .accessibilityIdentifier("palette-status-message")
             }
         }
         .opacity(animateIn ? 1 : 0)
@@ -133,7 +138,7 @@ struct ContentView: View {
                 .foregroundStyle(.white.opacity(0.55))
 
             ScrollView {
-                Text(model.clipboardMonitor.latestText)
+                Text(model.clipboardText)
                     .font(.custom("Avenir Next", size: 12))
                     .foregroundStyle(.white.opacity(0.9))
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -142,6 +147,7 @@ struct ContentView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
             .frame(minHeight: 140)
+            .accessibilityIdentifier("palette-clipboard-preview")
         }
         .opacity(animateIn ? 1 : 0)
         .offset(y: animateIn ? 0 : 10)
@@ -185,6 +191,7 @@ struct HeadingHistogramView: View {
         .padding(14)
         .background(Color.white.opacity(0.06))
         .clipShape(RoundedRectangle(cornerRadius: 16))
+        .accessibilityIdentifier("palette-histogram")
     }
 
     private func barHeight(for count: Int) -> CGFloat {

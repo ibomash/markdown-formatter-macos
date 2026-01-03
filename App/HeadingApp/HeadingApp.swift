@@ -2,7 +2,14 @@ import SwiftUI
 
 @main
 struct HeadingApp: App {
-    @StateObject private var model = AppModel()
+    private let configuration: AppConfiguration
+    @StateObject private var model: AppModel
+
+    init() {
+        let configuration = AppConfiguration.current()
+        self.configuration = configuration
+        _model = StateObject(wrappedValue: AppModel.makeDefault(configuration: configuration))
+    }
 
     var body: some Scene {
         MenuBarExtra("Heading", systemImage: "textformat") {

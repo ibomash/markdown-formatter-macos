@@ -1,33 +1,50 @@
 import AppKit
+import Combine
 import Foundation
 
-final class ClipboardMonitor: ObservableObject {
+final class ClipboardMonitor: ObservableObject, ClipboardMonitoring {
     @Published private(set) var latestText: String = ""
     @Published private(set) var lastChangeDate: Date?
 
     private let pasteboard: NSPasteboard
     private let pollInterval: TimeInterval
+    private let pollingEnabled: Bool
+    private let scheduler: PollingScheduler
     private var lastChangeCount: Int
-    private var timer: Timer?
+    private var pollingToken: PollingToken?
 
-    init(pasteboard: NSPasteboard = .general, pollInterval: TimeInterval = 0.5) {
+    init(
+        pasteboard: NSPasteboard = .general,
+        pollInterval: TimeInterval = 0.5,
+        pollingEnabled: Bool = true,
+        initialText: String? = nil,
+        scheduler: PollingScheduler = TimerPollingScheduler()
+    ) {
         self.pasteboard = pasteboard
         self.pollInterval = pollInterval
+        self.pollingEnabled = pollingEnabled
+        self.scheduler = scheduler
         self.lastChangeCount = pasteboard.changeCount
+        if let initialText {
+            latestText = initialText
+        }
         start()
     }
 
     deinit {
-        timer?.invalidate()
+        pollingToken?.cancel()
     }
 
     private func start() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: pollInterval, repeats: true) { [weak self] _ in
-            self?.pollPasteboard()
+        pollingToken?.cancel()
+        if pollingEnabled {
+            pollingToken = scheduler.schedule(every: pollInterval, tolerance: pollInterval * 0.2) { [weak self] in
+                self?.pollPasteboard()
+            }
+            refreshFromPasteboard()
+        } else if latestText.isEmpty {
+            refreshFromPasteboard()
         }
-        timer?.tolerance = pollInterval * 0.2
-        refreshFromPasteboard()
     }
 
     private func pollPasteboard() {
@@ -40,5 +57,9 @@ final class ClipboardMonitor: ObservableObject {
         lastChangeCount = pasteboard.changeCount
         latestText = pasteboard.string(forType: .string) ?? ""
         lastChangeDate = Date()
+    }
+
+    var latestTextPublisher: AnyPublisher<String, Never> {
+        $latestText.eraseToAnyPublisher()
     }
 }

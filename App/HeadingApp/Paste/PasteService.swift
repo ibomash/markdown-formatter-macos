@@ -9,9 +9,21 @@ final class PasteService {
     }
 
     func performPaste(text: String) -> Bool {
-        if NSApp.sendAction(#selector(NSText.insertText(_:)), to: nil, from: text) {
-            return true
+        let vKey: CGKeyCode = 0x09
+        guard let eventSource = CGEventSource(stateID: .hidSystemState) else {
+            return false
         }
-        return NSApp.sendAction(#selector(NSText.paste(_:)), to: nil, from: nil)
+
+        guard let keyDown = CGEvent(keyboardEventSource: eventSource, virtualKey: vKey, keyDown: true),
+              let keyUp = CGEvent(keyboardEventSource: eventSource, virtualKey: vKey, keyDown: false)
+        else {
+            return false
+        }
+
+        keyDown.flags = .maskCommand
+        keyUp.flags = .maskCommand
+        keyDown.post(tap: .cghidEventTap)
+        keyUp.post(tap: .cghidEventTap)
+        return true
     }
 }

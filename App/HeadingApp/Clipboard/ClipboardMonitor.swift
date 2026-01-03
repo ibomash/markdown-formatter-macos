@@ -27,13 +27,17 @@ final class ClipboardMonitor: ObservableObject {
             self?.pollPasteboard()
         }
         timer?.tolerance = pollInterval * 0.2
-        pollPasteboard()
+        refreshFromPasteboard()
     }
 
     private func pollPasteboard() {
         let changeCount = pasteboard.changeCount
         guard changeCount != lastChangeCount else { return }
-        lastChangeCount = changeCount
+        refreshFromPasteboard()
+    }
+
+    private func refreshFromPasteboard() {
+        lastChangeCount = pasteboard.changeCount
         latestText = pasteboard.string(forType: .string) ?? ""
         lastChangeDate = Date()
     }

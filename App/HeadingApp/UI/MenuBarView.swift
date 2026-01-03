@@ -42,6 +42,12 @@ struct MenuBarView: View {
             Button("Open Palette") {
                 openWindow(id: "palette")
             }
+
+            Divider()
+
+            Button("Quit") {
+                NSApp.terminate(nil)
+            }
         }
         .padding(.vertical, 4)
     }

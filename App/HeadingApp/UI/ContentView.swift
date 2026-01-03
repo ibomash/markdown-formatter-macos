@@ -22,22 +22,28 @@ struct ContentView: View {
                 histogram
                 baseLevelPicker
                 clipboardPreview
+                    .layoutPriority(1)
             }
-            .padding(24)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 24)
+            .padding(.top, 32)
         }
-        .overlay(WindowAccessor { window in
-            guard let window else { return }
-            window.titleVisibility = .hidden
-            window.titlebarAppearsTransparent = true
-            window.isMovableByWindowBackground = true
-            window.level = .floating
-        })
+        .background(
+            WindowAccessor { window in
+                guard let window else { return }
+                window.titleVisibility = .hidden
+                window.titlebarAppearsTransparent = true
+                window.isMovableByWindowBackground = true
+                window.level = .floating
+            }
+            .allowsHitTesting(false)
+        )
         .onAppear {
             withAnimation(.easeOut(duration: 0.5)) {
                 animateIn = true
             }
         }
-        .frame(minWidth: 520, minHeight: 380)
+        .frame(minWidth: 520, minHeight: 440)
     }
 
     private var header: some View {
@@ -135,7 +141,7 @@ struct ContentView: View {
                     .background(Color.black.opacity(0.25))
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
-            .frame(maxHeight: 140)
+            .frame(minHeight: 140)
         }
         .opacity(animateIn ? 1 : 0)
         .offset(y: animateIn ? 0 : 10)

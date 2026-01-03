@@ -12,4 +12,6 @@ dependencies: []
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Add UI test coverage for the macOS app (menu bar + palette flows). Requires additional design decisions on test scope, tooling, and app architecture hooks, so this is a later task.
+
+Reference: UI testing approach doc (doc-4).
 <!-- SECTION:DESCRIPTION:END -->
